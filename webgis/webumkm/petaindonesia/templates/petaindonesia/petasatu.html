@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peta Indonesia</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body { margin: 0; font-family: sans-serif; }
+        header {
+            background-color: #144d7e;
+            color: white;
+            padding: 12px 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        #map { height: calc(100vh - 48px); width: 100%; }
+    </style>
+</head>
+<body>
+    <header>Peta Indonesia</header>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        });
+
+        const satelit = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles © Esri'
+        });
+
+        const map = L.map('map', {
+            center: [-2.5, 118.0],
+            zoom: 5,
+            layers: [osm]
+        });
+
+        L.control.layers({
+            "OpenStreetMap": osm,
+            "Satelit": satelit
+        }).addTo(map);
+
+        L.control.scale({ imperial: false }).addTo(map);
+
+        L.marker([-6.2088, 106.8456]).addTo(map)
+            .bindPopup('<b>Jakarta</b><br>Ibu Kota Indonesia')
+            .openPopup();
+    </script>
+</body>
+</html>
